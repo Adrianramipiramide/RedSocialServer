@@ -6,6 +6,24 @@
 </head>
 <body>
 <div th:insert="fragments/nav"></div>
-<p th:text="'Bienvenido '+${usuario.nombre}"></p>
+<p th:text="'Bienvenido '+${usuario.nombreUsuario}"></p>
+<p>Aqui se mostraran las publicaciones de los usuarios</p>
+
+<a href="/crearPost"><button>Crear Post</button></a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Descripción</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${posts}">
+        <td th:text="${post.id}"></td>
+        <td th:text="${post.descripcion}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

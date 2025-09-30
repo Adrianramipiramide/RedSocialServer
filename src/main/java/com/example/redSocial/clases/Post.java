@@ -4,15 +4,16 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Post {
-
+    public int id;
     public String descripcion;
     public int numLikes;
     public LocalDate fechaPublicacion;
 
-    public Post(String descripcion, int numLikes, LocalDate fechaPublicacion) {
+    public Post(String descripcion, int numLikes, LocalDate fechaPublicacion, int id) {
         this.descripcion = descripcion;
         this.numLikes = numLikes;
         this.fechaPublicacion = fechaPublicacion;
+        this.id = id;
     }
 
     public String getDescripcion() {
@@ -27,6 +28,10 @@ public class Post {
         return fechaPublicacion;
     }
 
+    public int getId(){
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -36,8 +41,4 @@ public class Post {
                 '}';
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(descripcion, numLikes, fechaPublicacion);
-    }
 }

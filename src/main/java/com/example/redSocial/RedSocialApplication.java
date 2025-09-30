@@ -9,5 +9,4 @@ public class RedSocialApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RedSocialApplication.class, args);
 	}
-
 }
