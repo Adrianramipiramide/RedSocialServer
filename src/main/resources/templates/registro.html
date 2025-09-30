@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrarse</title>
+</head>
+<body>
+<div th:insert="fragments/nav"></div>
+<div>
+
+    <form action="crearUsuario" method="post">
+        <input type="text" name="nombre" placeholder="Nombre">
+        <input type="password" name="password" placeholder="password">
+        <input type="date" name="fechaNacimiento" placeholder="fecha Nacimiento">
+        <button type="submit">Enviar</button>
+    </form>
+
+</div>
+</body>
+</html>
