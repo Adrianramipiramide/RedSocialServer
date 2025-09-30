@@ -9,12 +9,12 @@ public class Post {
     public int numLikes;
     public LocalDate fechaPublicacion;
 
-    public Post(String descripcion, int numLikes, LocalDate fechaPublicacion, int id) {
+    public Post(String descripcion, int id) {
         this.descripcion = descripcion;
-        this.numLikes = numLikes;
-        this.fechaPublicacion = fechaPublicacion;
         this.id = id;
     }
+
+
 
     public String getDescripcion() {
         return descripcion;

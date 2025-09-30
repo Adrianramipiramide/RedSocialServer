@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
-public class MainController {
+public class   MainController {
     ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     ArrayList<Post> listaPost = new ArrayList<>();
 
@@ -59,13 +59,18 @@ public class MainController {
     }
 
     @PostMapping("crearPostReal")
-    String creacionPost(Post post, Model model){
+    String creacionPost(Post post,Usuario user, Model model){
         listaPost.add(post);
         System.out.println(post);
-        model.addAttribute("post", post);
+        model.addAttribute("post", listaPost);
+        model.addAttribute("usuario",user);
         return "posts";
     }
-
-
-
+//Falta que el usuario me acompañe alla donde voy
+// hacer un cerrar sesion
+// likes
+// repostear
+// los filtrados
+//orden de publicaciones por fecha con comparable
+// favicon y hacerlo bonito
 }

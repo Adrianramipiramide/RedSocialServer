@@ -9,6 +9,10 @@
 <p th:text="'Bienvenido '+${usuario.nombreUsuario}"></p>
 <p>Aqui se mostraran las publicaciones de los usuarios</p>
 
+<form action="" method="post">
+    <input type="text" name="buscar" placeholder="Buscar">
+    <button>Buscar</button>
+</form>
 <a href="/crearPost"><button>Crear Post</button></a>
 
 <table>
@@ -19,7 +23,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="post : ${posts}">
+    <tr th:each="post : ${post}">
         <td th:text="${post.id}"></td>
         <td th:text="${post.descripcion}"></td>
     </tr>
