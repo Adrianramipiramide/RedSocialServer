@@ -38,17 +38,19 @@ public class PostController {
     }
 
     @GetMapping("/filtrarPost")
-    String filtrado(@RequestParam String descripcion){
-
+    String filtrado(@RequestParam("descripcion") String descripcion , Model model){
+        ArrayList<Post> coincidencias = new ArrayList<>();
         for (Post p : listaPost) {
-            if( p.getDescripcion().contains(descripcion)){
-                System.out.println(p.getDescripcion());
+            if((p.getDescripcion().toLowerCase()).contains(descripcion.toLowerCase())){
+
+                coincidencias.add(p);
+
             }else {
                 System.out.println("No se ha encontrado un post que coincida");
             }
         }
+
+        model.addAttribute("post",coincidencias);
         return "posts";
-
-
     }
 }

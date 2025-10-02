@@ -20,12 +20,9 @@ public class   MainController {
     }
 
 
-
-//Falta que el usuario me acompañe alla donde voy
-// hacer un cerrar sesion
 // likes
 // repostear
-// los filtrados
+// los filtrado por (fecha)
 //orden de publicaciones por fecha con comparable
 // favicon y hacerlo bonito
 }

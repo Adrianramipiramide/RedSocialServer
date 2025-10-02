@@ -8,6 +8,9 @@ public class Post {
     public String descripcion;
     public LocalDate fechaPublicacion;
 
+    // Añadir atributo de persona para poder hacer el filtrado y los likes
+    //Añadir likes en el constructor con valor 0??
+
     public Post(int id, String descripcion , LocalDate fechaPublicacion) {
         this.id = id;
         this.descripcion = descripcion;
