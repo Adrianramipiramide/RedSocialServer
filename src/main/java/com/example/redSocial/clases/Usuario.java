@@ -1,6 +1,4 @@
 package com.example.redSocial.clases;
-
-
 import java.time.LocalDate;
 
 public class Usuario {

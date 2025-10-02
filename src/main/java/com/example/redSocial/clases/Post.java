@@ -6,12 +6,12 @@ import java.util.Objects;
 public class Post {
     public int id;
     public String descripcion;
-    public int numLikes;
     public LocalDate fechaPublicacion;
 
-    public Post(String descripcion, int id) {
-        this.descripcion = descripcion;
+    public Post(int id, String descripcion , LocalDate fechaPublicacion) {
         this.id = id;
+        this.descripcion = descripcion;
+        this.fechaPublicacion = fechaPublicacion;
     }
 
 
@@ -20,9 +20,7 @@ public class Post {
         return descripcion;
     }
 
-    public int getNumLikes() {
-        return numLikes;
-    }
+
 
     public LocalDate getFechaPublicacion() {
         return fechaPublicacion;
@@ -36,9 +34,14 @@ public class Post {
     public String toString() {
         return "Post{" +
                 "descripcion='" + descripcion + '\'' +
-                ", numLikes=" + numLikes +
                 ", fechaPublicacion=" + fechaPublicacion +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+
+        Post post = (Post) o;
+        return (post.descripcion).equals(this.descripcion);
+    }
 }

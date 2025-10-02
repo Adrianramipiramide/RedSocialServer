@@ -6,11 +6,13 @@
 </head>
 <body>
 <div th:insert="fragments/nav"></div>
-<p th:text="'Bienvenido '+${usuario.nombreUsuario}"></p>
+
+<!-- <p th:text="'Bienvenido '+${usuario.nombreUsuario}"></p> -->
+
 <p>Aqui se mostraran las publicaciones de los usuarios</p>
 
-<form action="" method="post">
-    <input type="text" name="buscar" placeholder="Buscar">
+<form action="/filtrarPost" method="get">
+    <input type="text" name="descripcion" placeholder="Buscar">
     <button>Buscar</button>
 </form>
 <a href="/crearPost"><button>Crear Post</button></a>
