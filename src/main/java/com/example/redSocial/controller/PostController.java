@@ -40,6 +40,8 @@ public class PostController {
     @GetMapping("/filtrarPost")
     String filtrado(@RequestParam("descripcion") String descripcion , Model model){
         ArrayList<Post> coincidencias = new ArrayList<>();
+
+
         for (Post p : listaPost) {
             if((p.getDescripcion().toLowerCase()).contains(descripcion.toLowerCase())){
 
@@ -53,4 +55,15 @@ public class PostController {
         model.addAttribute("post",coincidencias);
         return "posts";
     }
+
+    @PostMapping ("/gustar")
+    String darMeGusta(Post post){
+
+        post.setLikes(post.getLikes()+1);
+
+        return "posts";
+    }
+
+
+
 }

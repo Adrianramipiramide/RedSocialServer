@@ -45,6 +45,7 @@ public class UsuarioControler {
         listaUsuarios.add(user);
         model.addAttribute("user",user);
         System.out.println(user);
+
         try (BufferedWriter bf = new BufferedWriter(new FileWriter("posts.html", true))) {
             bf.write("Bienvenido "+ user.nombreUsuario + " ");
 

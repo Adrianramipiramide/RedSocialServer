@@ -22,12 +22,19 @@
     <tr>
         <th>ID</th>
         <th>Descripción</th>
+        <th>Likes</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="post : ${post}">
+        <form action="/gustar" method="post">
+        <input type="hidden" name="id" value="${post.id}">
+            <input type="hidden" name="descripcion" value="${post.descripcion}">
         <td th:text="${post.id}"></td>
         <td th:text="${post.descripcion}"></td>
+        <td th:text="${post.likes}"></td>
+      <td><button type="submit">Me gusta!</button></td>
+        </form>
     </tr>
     </tbody>
 </table>
