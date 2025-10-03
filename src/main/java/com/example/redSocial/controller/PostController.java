@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Controller
@@ -18,52 +19,74 @@ public class PostController {
 
 
     @RequestMapping("paginaPost")
-    String paginaPost(){
+    String paginaPost() {
 
         return "posts";
     }
 
     @RequestMapping("crearPost")
-    String crearPosr(){
+    String crearPosr() {
         return "crearPost";
     }
 
     @PostMapping("crearPostReal")
-    String creacionPost(Post post, Usuario user, Model model){
+    String creacionPost(Post post, Usuario user, Model model) {
         listaPost.add(post);
         System.out.println(post);
         model.addAttribute("post", listaPost);
-        model.addAttribute("usuario",user);
+        model.addAttribute("usuario", user);
         return "posts";
     }
 
     @GetMapping("/filtrarPost")
-    String filtrado(@RequestParam("descripcion") String descripcion , Model model){
+    String filtrado(@RequestParam("descripcion") String descripcion, Model model) {
         ArrayList<Post> coincidencias = new ArrayList<>();
 
 
         for (Post p : listaPost) {
-            if((p.getDescripcion().toLowerCase()).contains(descripcion.toLowerCase())){
+            if ((p.getDescripcion().toLowerCase()).contains(descripcion.toLowerCase())) {
 
                 coincidencias.add(p);
 
-            }else {
+            } else {
                 System.out.println("No se ha encontrado un post que coincida");
             }
         }
 
-        model.addAttribute("post",coincidencias);
+        model.addAttribute("post", coincidencias);
         return "posts";
     }
 
-    @PostMapping ("/gustar")
-    String darMeGusta(Post post){
+    @PostMapping("/gustar")
+    String darMeGusta(String id, Model model) {
 
-        post.setLikes(post.getLikes()+1);
+        try {
+            for (Post p : listaPost) {
+                if (p.getId() == Integer.parseInt(id)) {
+                    p.setLikes(p.getLikes() + 1);
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+//le tengo que pasar la lista con los posts para que me recorra la lista
+        model.addAttribute("post", listaPost);
 
         return "posts";
     }
 
+    @GetMapping("/ordenarFechas")
+    String ordenarFechas(String fecha){
 
+        ArrayList<LocalDate> fechas = new ArrayList<>();
+
+        for (Post p : listaPost){
+            fechas.add(LocalDate.parse(fecha));
+        }
+
+
+        return "posts";
+    }
 
 }

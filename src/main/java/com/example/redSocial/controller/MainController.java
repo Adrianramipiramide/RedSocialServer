@@ -20,7 +20,7 @@ public class   MainController {
     }
 
 
-// likes
+
 // repostear
 // los filtrado por (fecha)
 //orden de publicaciones por fecha con comparable
