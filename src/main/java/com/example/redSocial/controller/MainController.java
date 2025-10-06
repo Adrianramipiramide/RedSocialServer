@@ -15,5 +15,5 @@ public class   MainController {
 
 // los filtrado por (fecha)
 //filtrados por usuario
-//Revisar DAOFactory
+//Hacer con formato DAOFactory-> Crear las clases en el dao para que haya menos codigo en el Controller
 }
