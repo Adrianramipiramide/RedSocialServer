@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Posts</title>
+    <link  href="https://img.freepik.com/psd-premium/nuevo-icono-twitter-aislado-fondo-blanco-logotipo-letra-x-logotipo-boton-cuadrado-aplicacion-redes-sociales_989822-4769.jpg" rel="shorcut icon" type="image/x-icon">
 </head>
 <body>
 <div th:insert="fragments/nav"></div>
@@ -15,9 +16,11 @@
     <input type="text" name="descripcion" placeholder="Buscar">
     <button>Buscar</button>
 </form>
-<a href="/crearPost"><button>Crear Post</button></a>
+<a href="/crearPost">
+    <button>Crear Post</button>
+</a>
 <a href="/ordenarFechas">Ordenar Por fechas</a>
-
+<a href="/ordenarFechasDescendente">Ordenar Por fechas desc</a>
 <table>
     <thead>
     <tr>
@@ -29,13 +32,26 @@
     </thead>
     <tbody>
     <tr th:each="post : ${post}">
-        <form action="/gustar" method="post">
-        <input type="hidden" name="id" th:value="${post.id}">
-        <td th:text="${post.id}"></td>
-        <td th:text="${post.descripcion}"></td>
+
+            <td th:text="${post.id}"></td>
+            <td th:text="${post.descripcion}"></td>
             <td th:text="${post.fechaPublicacion}"></td>
-        <td th:text="${post.likes}"></td>
-      <td><button type="submit">Me gusta!</button></td>
+            <td th:text="${post.likes}"></td>
+            <td>
+                <form action="/gustar" method="post">
+                    <input type="hidden" name="id" th:value="${post.id}">
+                    <button type="submit">Me gusta!</button>
+                </form>
+            </td>
+            <td>
+                <form action="/repostear" method="post">
+
+                    <input type="hidden" name="descripcion" th:value="${post.descripcion}">
+                    <input type="hidden" name="fechaPublicacion" th:value="${post.fechaPublicacion}">
+
+                    <button>Repostear</button>
+                </form>
+            </td>
         </form>
     </tr>
     </tbody>

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -35,6 +38,7 @@ public class PostController {
         System.out.println(post);
         model.addAttribute("post", listaPost);
         model.addAttribute("usuario", user);
+
         return "posts";
     }
 
@@ -54,6 +58,7 @@ public class PostController {
         }
 
         model.addAttribute("post", coincidencias);
+
         return "posts";
     }
 
@@ -76,17 +81,48 @@ public class PostController {
         return "posts";
     }
 
-    @GetMapping("/ordenarFechas")
-    String ordenarFechas(String fecha){
 
-        ArrayList<LocalDate> fechas = new ArrayList<>();
+    @PostMapping("/repostear")
+    String repostear(String descripcion, String fechaPublicacion, Model model){
 
-        for (Post p : listaPost){
-            fechas.add(LocalDate.parse(fecha));
-        }
+        int id = (int) (Math.random()*1000);
+        Post p = new Post(id,descripcion,LocalDate.parse(fechaPublicacion));
+        listaPost.add(p);
 
+
+        model.addAttribute("post", listaPost);
 
         return "posts";
     }
 
+    @GetMapping("/ordenarFechas")
+    String ordenarFechas(String fecha, Model model) {
+
+
+        List<Post> fechasOrdenadas;
+
+        fechasOrdenadas = listaPost.stream().sorted(Comparator.comparing(Post::getFechaPublicacion)).toList();
+
+        System.out.println(fechasOrdenadas);
+
+        model.addAttribute("post", fechasOrdenadas);
+
+        return "posts";
+    }
+
+
+    @GetMapping("/ordenarFechasDescendente")
+    String ordenarFechasdesc(String fecha, Model model) {
+
+
+        List<Post> fechasOrdenadas;
+
+        fechasOrdenadas = listaPost.stream().sorted(Comparator.comparing(Post::getFechaPublicacion).reversed()).toList();
+
+        System.out.println(fechasOrdenadas);
+
+        model.addAttribute("post", fechasOrdenadas);
+
+        return "posts";
+    }
 }

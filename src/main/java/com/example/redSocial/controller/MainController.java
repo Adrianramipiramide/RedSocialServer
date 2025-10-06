@@ -1,14 +1,6 @@
 package com.example.redSocial.controller;
-import com.example.redSocial.clases.Post;
-import com.example.redSocial.clases.Usuario;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 @Controller
 public class   MainController {
@@ -21,8 +13,7 @@ public class   MainController {
 
 
 
-// repostear
 // los filtrado por (fecha)
-//orden de publicaciones por fecha con comparable
-// favicon y hacerlo bonito
+//filtrados por usuario
+//Revisar DAOFactory
 }
