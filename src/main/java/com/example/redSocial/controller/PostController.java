@@ -2,6 +2,8 @@ package com.example.redSocial.controller;
 
 import com.example.redSocial.clases.Post;
 import com.example.redSocial.clases.Usuario;
+import com.example.redSocial.dao.DAOFactory;
+import com.example.redSocial.dao.post.DAOPostRam;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +20,6 @@ import java.util.List;
 @Controller
 public class PostController {
 
-    ArrayList<Post> listaPost = new ArrayList<>();
-
-
     @RequestMapping("paginaPost")
     String paginaPost() {
 
@@ -34,9 +33,13 @@ public class PostController {
 
     @PostMapping("crearPostReal")
     String creacionPost(Post post, Usuario user, Model model) {
-        listaPost.add(post);
+
+        DAOFactory daoFactory = DAOFactory.getInstance();
+       List<Post> listaP =  daoFactory.getDaoPost().getPosts();
+
+        listaP.add(post);
         System.out.println(post);
-        model.addAttribute("post", listaPost);
+        model.addAttribute("post", listaP);
         model.addAttribute("usuario", user);
 
         return "posts";
@@ -46,8 +49,9 @@ public class PostController {
     String filtrado(@RequestParam("descripcion") String descripcion, Model model) {
         ArrayList<Post> coincidencias = new ArrayList<>();
 
-
-        for (Post p : listaPost) {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        List<Post> listaP =  daoFactory.getDaoPost().getPosts();
+        for (Post p : listaP) {
             if ((p.getDescripcion().toLowerCase()).contains(descripcion.toLowerCase())) {
 
                 coincidencias.add(p);
@@ -68,9 +72,10 @@ public class PostController {
 
     @PostMapping("/gustar")
     String darMeGusta(String id, Model model) {
-
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        List<Post> listaP =  daoFactory.getDaoPost().getPosts();
         try {
-            for (Post p : listaPost) {
+            for (Post p : listaP) {
                 if (p.getId() == Integer.parseInt(id)) {
                     p.setLikes(p.getLikes() + 1);
                 }
@@ -80,7 +85,7 @@ public class PostController {
             e.printStackTrace();
         }
 //le tengo que pasar la lista con los posts para que me recorra la lista
-        model.addAttribute("post", listaPost);
+        model.addAttribute("post", listaP);
 
         return "posts";
     }
@@ -89,12 +94,15 @@ public class PostController {
     @PostMapping("/repostear")
     String repostear(String descripcion,String creador, String fechaPublicacion, Model model){
 
-        int id = (int) (Math.random()*1000);
-        Post p = new Post(id,descripcion,LocalDate.parse(fechaPublicacion), creador);
-        listaPost.add(p);
+
+        DAOFactory daoFactory = DAOFactory.getInstance();
 
 
-        model.addAttribute("post", listaPost);
+        daoFactory.getDaoPost().repostear(descripcion,creador,fechaPublicacion);
+        List<Post> listaP =  daoFactory.getDaoPost().getPosts();
+
+
+        model.addAttribute("post", listaP);
 
         return "posts";
     }
@@ -102,10 +110,11 @@ public class PostController {
     @GetMapping("/ordenarFechas")
     String ordenarFechas(String fecha, Model model) {
 
-
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        List<Post> listaP =  daoFactory.getDaoPost().getPosts();
         List<Post> fechasOrdenadas;
 
-        fechasOrdenadas = listaPost.stream().sorted(Comparator.comparing(Post::getFechaPublicacion)).toList();
+        fechasOrdenadas = listaP.stream().sorted(Comparator.comparing(Post::getFechaPublicacion)).toList();
 
         System.out.println(fechasOrdenadas);
 
@@ -118,10 +127,11 @@ public class PostController {
     @GetMapping("/ordenarFechasDescendente")
     String ordenarFechasdesc(String fecha, Model model) {
 
-
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        List<Post> listaP =  daoFactory.getDaoPost().getPosts();
         List<Post> fechasOrdenadas;
 
-        fechasOrdenadas = listaPost.stream().sorted(Comparator.comparing(Post::getFechaPublicacion).reversed()).toList();
+        fechasOrdenadas = listaP.stream().sorted(Comparator.comparing(Post::getFechaPublicacion).reversed()).toList();
 
         System.out.println(fechasOrdenadas);
 

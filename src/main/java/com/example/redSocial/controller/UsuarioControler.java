@@ -1,5 +1,7 @@
 package com.example.redSocial.controller;
+import com.example.redSocial.clases.Post;
 import com.example.redSocial.clases.Usuario;
+import com.example.redSocial.dao.DAOFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,10 +11,10 @@ import javax.swing.text.Document;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UsuarioControler {
-    ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
     @RequestMapping("/registro")
     String registro(){
@@ -26,7 +28,10 @@ public class UsuarioControler {
 
     @PostMapping("/comprobarLogin")
     String comprobarLogin(Usuario user, Model model){
-        if(listaUsuarios.contains(user)){
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
+
+        if(listaU.contains(user)){
             return "posts";
         }
         System.out.println("Error");
@@ -42,7 +47,11 @@ public class UsuarioControler {
 
     @PostMapping("crearUsuario")
     String registrarse(Usuario user, Model model){
-        listaUsuarios.add(user);
+
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
+
+        listaU.add(user);
         model.addAttribute("user",user);
         System.out.println(user);
 
