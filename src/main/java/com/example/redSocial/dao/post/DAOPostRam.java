@@ -29,4 +29,42 @@ public class DAOPostRam implements DAOPost{
 
         return p;
     }
+
+    @Override
+    public List<Post> filtrar(String descripcion) {
+
+
+        ArrayList<Post> coincidencias = new ArrayList<>();
+
+
+        for (Post p : listaPost) {
+            if ((p.getDescripcion().toLowerCase()).contains(descripcion.toLowerCase())) {
+
+                coincidencias.add(p);
+
+            } else if ((p.getFechaPublicacion().toString()).equals(descripcion)) {
+                coincidencias.add(p);
+            } else if ((p.getCreador().toLowerCase()).contains(descripcion.toLowerCase())) {
+                coincidencias.add(p);
+            } else {
+                System.out.println("No se ha encontrado un post que coincida");
+            }
+        }
+        return coincidencias;
+
+    }
+
+    @Override
+    public void darLike(String id) {
+        try {
+            for (Post p : listaPost) {
+                if (p.getId() == Integer.parseInt(id)) {
+                    p.setLikes(p.getLikes() + 1);
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
 }

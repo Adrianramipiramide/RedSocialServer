@@ -32,16 +32,11 @@ public class UsuarioControler {
         List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
 
         if(listaU.contains(user)){
+            model.addAttribute("post", daoFactory.getDaoPost().getPosts());
             return "posts";
         }
         System.out.println("Error");
 
-        try (BufferedWriter bf = new BufferedWriter(new FileWriter("posts.html"))) {
-            bf.write("Bienvenido "+ user.nombreUsuario + " ");
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         return "index";
     }
 
@@ -51,16 +46,14 @@ public class UsuarioControler {
         DAOFactory daoFactory = DAOFactory.getInstance();
         List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
 
+        List<Post> listaP = daoFactory.getDaoPost().getPosts();
+
         listaU.add(user);
         model.addAttribute("user",user);
+        model.addAttribute("post", listaP);
         System.out.println(user);
 
-        try (BufferedWriter bf = new BufferedWriter(new FileWriter("posts.html", true))) {
-            bf.write("Bienvenido "+ user.nombreUsuario + " ");
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         return "posts";
     }
 }

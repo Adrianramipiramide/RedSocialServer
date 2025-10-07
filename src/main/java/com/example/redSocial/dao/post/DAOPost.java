@@ -10,5 +10,9 @@ public interface DAOPost {
 
     public Post repostear(String descripcion,String creador, String fechaPublicacion);
 
+    public List<Post> filtrar(String descripcion);
+
+    public void darLike(String id);
+
 
 }
