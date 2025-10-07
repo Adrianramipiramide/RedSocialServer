@@ -8,15 +8,17 @@ public class Post {
     public String descripcion;
     public LocalDate fechaPublicacion;
     public int likes;
+    public String creador;
 
     // Añadir atributo de persona para poder hacer el filtrado y los likes
     //Añadir likes en el constructor con valor 0??
 
-    public Post(int id, String descripcion , LocalDate fechaPublicacion) {
+    public Post(int id, String descripcion , LocalDate fechaPublicacion, String creador) {
         this.id = id;
         this.descripcion = descripcion;
         this.fechaPublicacion = fechaPublicacion;
         this.likes = 0;
+        this.creador=creador;
     }
 
 
@@ -24,7 +26,9 @@ public class Post {
         return descripcion;
     }
 
-
+    public String getCreador() {
+        return creador;
+    }
 
     public LocalDate getFechaPublicacion() {
         return fechaPublicacion;

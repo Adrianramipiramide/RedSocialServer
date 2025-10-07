@@ -52,6 +52,10 @@ public class PostController {
 
                 coincidencias.add(p);
 
+            } else if ((p.getFechaPublicacion().toString()).equals(descripcion)) {
+                coincidencias.add(p);
+            } else if ((p.getCreador().toLowerCase()).contains(descripcion.toLowerCase())) {
+                coincidencias.add(p);
             } else {
                 System.out.println("No se ha encontrado un post que coincida");
             }
@@ -83,10 +87,10 @@ public class PostController {
 
 
     @PostMapping("/repostear")
-    String repostear(String descripcion, String fechaPublicacion, Model model){
+    String repostear(String descripcion,String creador, String fechaPublicacion, Model model){
 
         int id = (int) (Math.random()*1000);
-        Post p = new Post(id,descripcion,LocalDate.parse(fechaPublicacion));
+        Post p = new Post(id,descripcion,LocalDate.parse(fechaPublicacion), creador);
         listaPost.add(p);
 
 
