@@ -2,6 +2,7 @@ package com.example.redSocial.clases;
 import java.time.LocalDate;
 
 public class Usuario {
+    public int id;
     public LocalDate fechaNacimiento;
     public String nombreUsuario;
     public String password;
@@ -13,6 +14,9 @@ public class Usuario {
         this.password = password;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
