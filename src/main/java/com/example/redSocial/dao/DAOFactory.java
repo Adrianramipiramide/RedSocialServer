@@ -1,5 +1,4 @@
 package com.example.redSocial.dao;
-
 import com.example.redSocial.clases.Post;
 import com.example.redSocial.dao.post.DAOPost;
 import com.example.redSocial.dao.post.DAOPostRam;
