@@ -2,8 +2,9 @@ package com.example.redSocial.dao;
 import com.example.redSocial.clases.Post;
 import com.example.redSocial.dao.post.DAOPost;
 import com.example.redSocial.dao.post.DAOPostRam;
+import com.example.redSocial.dao.usuario.DAOUserSQL;
 import com.example.redSocial.dao.usuario.DAOUsuario;
-import com.example.redSocial.dao.usuario.DAOUsuarioRam;
+
 
 public class DAOFactory {
 
@@ -30,7 +31,7 @@ public class DAOFactory {
 
     public DAOUsuario getDaoUsuario(){
         if(this.daoUsuario == null){
-            daoUsuario = new DAOUsuarioRam();
+            this.daoUsuario = new DAOUserSQL();
         }
         return daoUsuario;
     }

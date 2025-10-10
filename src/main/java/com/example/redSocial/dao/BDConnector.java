@@ -15,7 +15,7 @@ public class BDConnector {
 
         if (conexion == null) {
             try {
-                conexion = DriverManager.getConnection("jdbc:mysql://servidorseptiembre.cvkm0wqi41sp.us-east-1.rds.amazonaws.com","admin","monzon2025$");
+                conexion = DriverManager.getConnection("jdbc:mysql://servidorseptiembre.cvkm0wqi41sp.us-east-1.rds.amazonaws.com/RedSocial","admin","monzon2025$");
             } catch (SQLException e) {
                 e.printStackTrace();
             }

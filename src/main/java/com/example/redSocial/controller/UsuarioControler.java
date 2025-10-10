@@ -2,6 +2,7 @@ package com.example.redSocial.controller;
 import com.example.redSocial.clases.Post;
 import com.example.redSocial.clases.Usuario;
 import com.example.redSocial.dao.DAOFactory;
+import com.example.redSocial.dao.usuario.DAOUserSQL;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +14,17 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @Controller
 public class UsuarioControler {
+/*
+    private DAOUserSQL daoUserSQL;
 
+    public UsuarioControler(){
+        this.daoUserSQL = new DAOUserSQL();
+    }
+*/
     @RequestMapping("/registro")
     String registro(){
         return "registro";
@@ -44,11 +53,13 @@ public class UsuarioControler {
     String registrarse(Usuario user, Model model){
 
         DAOFactory daoFactory = DAOFactory.getInstance();
-        List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
+        //List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
+
+        DAOFactory.getInstance().getDaoUsuario().crearUsuario(String.valueOf(user.getFechaNacimiento()), user.getNombreUsuario(), user.getPassword());
 
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
 
-        listaU.add(user);
+     //   listaU.add(user);
         model.addAttribute("user",user);
         model.addAttribute("post", listaP);
         System.out.println(user);
