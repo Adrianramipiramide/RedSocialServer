@@ -24,6 +24,7 @@ public class DAOUserSQL implements DAOUsuario{
             while (rs.next()){
                 Usuario user = new Usuario(LocalDate.parse(rs.getString("fechaNacimiento")), rs.getString("nombre"),rs.getString("passw"));
                 listaUsuarios.add(user);
+                System.out.println(user);
             }
 
         }catch(SQLException e){
@@ -34,7 +35,9 @@ public class DAOUserSQL implements DAOUsuario{
 
     @Override
     public Usuario crearUsuario(String nombre, String passw, String fechaNacimiento) {
-
+        System.out.println(nombre);
+        System.out.println(passw);
+        System.out.println(fechaNacimiento);
         try{
             String consulta = "insert into User (nombre,passw,fechaNacimiento) values (?,?,?)";
             PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Posts</title>
-    <link  href="https://img.freepik.com/psd-premium/nuevo-icono-twitter-aislado-fondo-blanco-logotipo-letra-x-logotipo-boton-cuadrado-aplicacion-redes-sociales_989822-4769.jpg" rel="shorcut icon" type="image/x-icon">
+    <link href="https://img.freepik.com/psd-premium/nuevo-icono-twitter-aislado-fondo-blanco-logotipo-letra-x-logotipo-boton-cuadrado-aplicacion-redes-sociales_989822-4769.jpg"
+          rel="shorcut icon" type="image/x-icon">
 </head>
 <body>
 <div th:insert="fragments/nav"></div>
@@ -27,33 +28,35 @@
         <th>ID</th>
         <th>Descripción</th>
         <th>Fecha Publicacion</th>
-        <th>Likes</th>
         <th>Usuario</th>
+        <th>Likes</th>
+
     </tr>
     </thead>
     <tbody>
     <tr th:each="post : ${post}">
 
-            <td th:text="${post.id}"></td>
-            <td th:text="${post.descripcion}"></td>
-            <td th:text="${post.fechaPublicacion}"></td>
-            <td th:text="${post.likes}"></td>
-             <td th:text="${post.creador}"></td>
-            <td>
-                <form action="/gustar" method="post">
-                    <input type="hidden" name="id" th:value="${post.id}">
-                    <button type="submit">Me gusta!</button>
-                </form>
-            </td>
-            <td>
-                <form action="/repostear" method="post">
+        <td th:text="${post.id}"></td>
+        <td th:text="${post.descripcion}"></td>
+        <td th:text="${post.fechaPublicacion}"></td>
+        <td th:text="${post.idUser}"></td>
 
-                    <input type="hidden" name="descripcion" th:value="${post.descripcion}">
-                    <input type="hidden" name="fechaPublicacion" th:value="${post.fechaPublicacion}">
-                    <input type="hidden" name="creador" th:value="${post.creador}">
-                    <button>Repostear</button>
-                </form>
-            </td>
+            <form action="/gustar" method="post">
+                <td th:text="${likes}"></td>
+                <td>    <input type="hidden" name="idPost" th:value="${post.id}"> </td>
+               <td> <button type="submit">Me gusta!</button>
+               </td>
+            </form>
+
+        <td>
+            <form action="/repostear" method="post">
+
+                <input type="hidden" name="descripcion" th:value="${post.descripcion}">
+                <input type="hidden" name="fechaPublicacion" th:value="${post.fechaPublicacion}">
+                <input type="hidden" name="idUser" th:value="${post.idUser}">
+                <button>Repostear</button>
+            </form>
+        </td>
         </form>
     </tr>
     </tbody>

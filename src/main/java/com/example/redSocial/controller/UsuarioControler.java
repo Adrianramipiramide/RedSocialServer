@@ -43,10 +43,11 @@ public class UsuarioControler {
         if(listaU.contains(user)){
             model.addAttribute("post", daoFactory.getDaoPost().getPosts());
             return "posts";
+        }else {
+            System.out.println("Error");
+            return "index";
         }
-        System.out.println("Error");
 
-        return "index";
     }
 
     @PostMapping("crearUsuario")
@@ -55,7 +56,7 @@ public class UsuarioControler {
         DAOFactory daoFactory = DAOFactory.getInstance();
         //List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
 
-        DAOFactory.getInstance().getDaoUsuario().crearUsuario(String.valueOf(user.getFechaNacimiento()), user.getNombreUsuario(), user.getPassword());
+        DAOFactory.getInstance().getDaoUsuario().crearUsuario(user.getNombreUsuario(),user.getPassword(), String.valueOf(user.getFechaNacimiento()));
 
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
 

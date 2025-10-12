@@ -3,7 +3,7 @@ package com.example.redSocial.controller;
 import com.example.redSocial.clases.Post;
 import com.example.redSocial.clases.Usuario;
 import com.example.redSocial.dao.DAOFactory;
-import com.example.redSocial.dao.post.DAOPostRam;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,15 +30,15 @@ public class PostController {
     }
 
     @PostMapping("crearPostReal")
-    String creacionPost(Post post, Usuario user, Model model) {
+    String creacionPost( String descripcion, LocalDate fechaPublicacion, int idUser, Model model) {
 
         DAOFactory daoFactory = DAOFactory.getInstance();
-        List<Post> listaP = daoFactory.getDaoPost().getPosts();
 
-        listaP.add(post);
-        System.out.println(post);
+        System.out.println("El id de usuario es "+idUser);
+        DAOFactory.getInstance().getDaoPost().crearPost(descripcion,String.valueOf(fechaPublicacion), idUser);
+        List<Post> listaP = daoFactory.getDaoPost().getPosts();
         model.addAttribute("post", listaP);
-        model.addAttribute("usuario", user);
+
 
         return "posts";
     }
@@ -52,10 +53,12 @@ public class PostController {
     }
 
     @PostMapping("/gustar")
-    String darMeGusta(String id, Model model) {
+    String darMeGusta(int idPost, Model model) {
         DAOFactory daoFactory = DAOFactory.getInstance();
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
-        daoFactory.getDaoPost().darLike(id);
+        daoFactory.getDaoLike().sumarLike(1,idPost);
+
+        model.addAttribute("likes",daoFactory.getDaoLike().getLikes());
         model.addAttribute("post", listaP);
 
         return "posts";
@@ -63,11 +66,12 @@ public class PostController {
 
 
     @PostMapping("/repostear")
-    String repostear(String descripcion, String creador, String fechaPublicacion, Model model) {
+    String repostear(String descripcion, int idUser, String fechaPublicacion, Model model) {
 
         DAOFactory daoFactory = DAOFactory.getInstance();
 
-        daoFactory.getDaoPost().repostear(descripcion, creador, fechaPublicacion);
+
+        daoFactory.getDaoPost().repostear(descripcion, idUser, fechaPublicacion);
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
 
         model.addAttribute("post", listaP);
