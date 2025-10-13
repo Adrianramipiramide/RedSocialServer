@@ -1,4 +1,5 @@
 package com.example.redSocial.controller;
+
 import com.example.redSocial.clases.Post;
 import com.example.redSocial.clases.Usuario;
 import com.example.redSocial.dao.DAOFactory;
@@ -15,35 +16,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 @Controller
 public class UsuarioControler {
-/*
-    private DAOUserSQL daoUserSQL;
+    /*
+        private DAOUserSQL daoUserSQL;
 
-    public UsuarioControler(){
-        this.daoUserSQL = new DAOUserSQL();
-    }
-*/
+        public UsuarioControler(){
+            this.daoUserSQL = new DAOUserSQL();
+        }
+    */
+   public static int idUsuarioLogeado;
+
     @RequestMapping("/registro")
-    String registro(){
+    String registro() {
         return "registro";
     }
 
     @RequestMapping("/inicioSesion")
-    String inicioSesion(){
+    String inicioSesion() {
         return "inicioSesion";
     }
 
     @PostMapping("/comprobarLogin")
-    String comprobarLogin(Usuario user, Model model){
+    String comprobarLogin(Usuario user, Model model) {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
+        List<Usuario> listaU = daoFactory.getDaoUsuario().getUsuarios();
+      //  model.addAttribute("likes",daoFactory.getDaoLike().getLikes());
 
-        if(listaU.contains(user)){
+        if (listaU.contains(user)) {
             model.addAttribute("post", daoFactory.getDaoPost().getPosts());
+            System.out.println(user.nombreUsuario);
+            idUsuarioLogeado = DAOFactory.getInstance().getDaoUsuario().getIdUsuarioLogeado(user.nombreUsuario);
             return "posts";
-        }else {
+        } else {
             System.out.println("Error");
             return "index";
         }
@@ -51,17 +56,19 @@ public class UsuarioControler {
     }
 
     @PostMapping("crearUsuario")
-    String registrarse(Usuario user, Model model){
+    String registrarse(Usuario user, Model model) {
 
         DAOFactory daoFactory = DAOFactory.getInstance();
-        //List<Usuario> listaU =  daoFactory.getDaoUsuario().getUsuarios();
 
-        DAOFactory.getInstance().getDaoUsuario().crearUsuario(user.getNombreUsuario(),user.getPassword(), String.valueOf(user.getFechaNacimiento()));
+        DAOFactory.getInstance().getDaoUsuario().crearUsuario(user.getNombreUsuario(), user.getPassword(), String.valueOf(user.getFechaNacimiento()));
 
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
 
-     //   listaU.add(user);
-        model.addAttribute("user",user);
+        idUsuarioLogeado = DAOFactory.getInstance().getDaoUsuario().getIdUsuarioLogeado(user.nombreUsuario);
+        System.out.println(idUsuarioLogeado);
+
+   //     model.addAttribute("likes",DAOFactory.getInstance().getDaoLike().getLikes());
+
         model.addAttribute("post", listaP);
         System.out.println(user);
 

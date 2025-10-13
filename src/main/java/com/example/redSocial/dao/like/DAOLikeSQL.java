@@ -1,34 +1,43 @@
 package com.example.redSocial.dao.like;
 
+import com.example.redSocial.clases.Post;
 import com.example.redSocial.dao.BDConnector;
+import com.example.redSocial.dao.DAOFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DAOLikeSQL implements DAOLike{
+public class DAOLikeSQL implements DAOLike {
 
-    public int getLikes() {
-        int numLikes = 0;
-        String consulta = "select * from UserPost_Likes";
+    public void getLikes() {
+
+        List<Post> listaP = DAOFactory.getInstance().getDaoPost().getPosts().stream().toList();
+
+
+
+        String consulta = "select idPost,count(idUser) from UserPost_Likes group by idPost";
         try {
             PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);
 
             ResultSet rs = statement.executeQuery();
-            while (rs.next()){
-                numLikes++;
+            int contador = 0;
+            while (rs.next()) {
+//porque no me hace el set likes
+                listaP.get(contador).setLikes(rs.getInt(2));
+                contador++;
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return numLikes;
     }
 
     public void sumarLike(int idUser, int idPost) {
-//UN POST NO PUEDE TENER MAS DE UNA LIKE POR LA PK
-        //TENGO QUE PONER QUE ME COJA EL IDUSER BIEN
+
         String consulta = "insert into UserPost_Likes (idUser, idPost) values (?,?)";
 
         try {

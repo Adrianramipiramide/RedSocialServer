@@ -13,7 +13,7 @@ public interface DAOUsuario {
 
     public Usuario crearUsuario(String nombre, String passw, String fechaNacimiento);
 
-
+    public int getIdUsuarioLogeado(String nombreUsuario);
 
 
 

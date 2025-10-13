@@ -30,12 +30,12 @@ public class PostController {
     }
 
     @PostMapping("crearPostReal")
-    String creacionPost( String descripcion, LocalDate fechaPublicacion, int idUser, Model model) {
+    String creacionPost(String descripcion, LocalDate fechaPublicacion, Model model) {
 
         DAOFactory daoFactory = DAOFactory.getInstance();
 
-        System.out.println("El id de usuario es "+idUser);
-        DAOFactory.getInstance().getDaoPost().crearPost(descripcion,String.valueOf(fechaPublicacion), idUser);
+        System.out.println("El id de usuario es " + UsuarioControler.idUsuarioLogeado);
+        DAOFactory.getInstance().getDaoPost().crearPost(descripcion, String.valueOf(fechaPublicacion), UsuarioControler.idUsuarioLogeado);
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
         model.addAttribute("post", listaP);
 
@@ -56,9 +56,12 @@ public class PostController {
     String darMeGusta(int idPost, Model model) {
         DAOFactory daoFactory = DAOFactory.getInstance();
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
-        daoFactory.getDaoLike().sumarLike(1,idPost);
+        daoFactory.getDaoLike().sumarLike(UsuarioControler.idUsuarioLogeado, idPost);
+        daoFactory.getDaoLike().getLikes();
+        for (Post p : listaP) {
+            model.addAttribute("likes", p.getLikes());
+        }
 
-        model.addAttribute("likes",daoFactory.getDaoLike().getLikes());
         model.addAttribute("post", listaP);
 
         return "posts";
@@ -66,14 +69,18 @@ public class PostController {
 
 
     @PostMapping("/repostear")
-    String repostear(String descripcion, int idUser, String fechaPublicacion, Model model) {
+    String repostear(String descripcion, String fechaPublicacion, Model model) {
 
         DAOFactory daoFactory = DAOFactory.getInstance();
 
 
-        daoFactory.getDaoPost().repostear(descripcion, idUser, fechaPublicacion);
+        daoFactory.getDaoPost().repostear(descripcion, UsuarioControler.idUsuarioLogeado, fechaPublicacion);
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
-
+      //  model.addAttribute("likes", daoFactory.getDaoLike().getLikes());
+        daoFactory.getDaoLike().getLikes();
+        for (Post p : listaP) {
+            model.addAttribute("likes", p.getLikes());
+        }
         model.addAttribute("post", listaP);
 
         return "posts";
@@ -87,6 +94,11 @@ public class PostController {
         List<Post> fechasOrdenadas;
 
         fechasOrdenadas = listaP.stream().sorted(Comparator.comparing(Post::getFechaPublicacion)).toList();
+      //  model.addAttribute("likes", daoFactory.getDaoLike().getLikes());
+        daoFactory.getDaoLike().getLikes();
+        for (Post p : listaP) {
+            model.addAttribute("likes", p.getLikes());
+        }
 
         model.addAttribute("post", fechasOrdenadas);
 
@@ -102,7 +114,11 @@ public class PostController {
         List<Post> fechasOrdenadas;
 
         fechasOrdenadas = listaP.stream().sorted(Comparator.comparing(Post::getFechaPublicacion).reversed()).toList();
-
+       // model.addAttribute("likes", );
+        daoFactory.getDaoLike().getLikes();
+        for (Post p : listaP) {
+            model.addAttribute("likes", p.getLikes());
+        }
         model.addAttribute("post", fechasOrdenadas);
 
         return "posts";

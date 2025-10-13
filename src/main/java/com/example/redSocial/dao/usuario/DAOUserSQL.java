@@ -50,4 +50,25 @@ public class DAOUserSQL implements DAOUsuario{
         }
         return null;
     }
+
+
+    public int getIdUsuarioLogeado(String nombreUsuario){
+        int idUsuario = 0;
+        String consulta = "select id from User where nombre = ?";
+        try{
+            PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);
+
+            statement.setString(1,nombreUsuario);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                idUsuario = rs.getInt("id");
+            }
+
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return idUsuario;
+    }
 }
