@@ -13,21 +13,16 @@ import java.util.List;
 
 public class DAOLikeSQL implements DAOLike {
 
-    public void getLikes() {
+    public void getLikes(List<Post> posts) {
 
-        List<Post> listaP = DAOFactory.getInstance().getDaoPost().getPosts().stream().toList();
-
-
-
-        String consulta = "select idPost,count(idUser) from UserPost_Likes group by idPost";
+        String consulta = "select idPost,count(idUser) as numLikes from UserPost_Likes group by idPost";
         try {
             PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);
 
             ResultSet rs = statement.executeQuery();
             int contador = 0;
             while (rs.next()) {
-//porque no me hace el set likes
-                listaP.get(contador).setLikes(rs.getInt(2));
+                posts.get(contador).setLikes(rs.getInt("numLikes"));
                 contador++;
             }
 

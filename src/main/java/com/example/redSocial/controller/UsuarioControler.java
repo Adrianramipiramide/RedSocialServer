@@ -25,7 +25,7 @@ public class UsuarioControler {
             this.daoUserSQL = new DAOUserSQL();
         }
     */
-   public static int idUsuarioLogeado;
+    public static int idUsuarioLogeado;
 
     @RequestMapping("/registro")
     String registro() {
@@ -41,8 +41,9 @@ public class UsuarioControler {
     String comprobarLogin(Usuario user, Model model) {
         DAOFactory daoFactory = DAOFactory.getInstance();
         List<Usuario> listaU = daoFactory.getDaoUsuario().getUsuarios();
-      //  model.addAttribute("likes",daoFactory.getDaoLike().getLikes());
-
+        //  model.addAttribute("likes",daoFactory.getDaoLike().getLikes());
+        List<Post> listaP = DAOFactory.getInstance().getDaoPost().getPosts();
+        daoFactory.getDaoLike().getLikes(listaP);
         if (listaU.contains(user)) {
             model.addAttribute("post", daoFactory.getDaoPost().getPosts());
             System.out.println(user.nombreUsuario);
@@ -64,10 +65,13 @@ public class UsuarioControler {
 
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
 
+        daoFactory.getDaoLike().getLikes(listaP);
+
+
         idUsuarioLogeado = DAOFactory.getInstance().getDaoUsuario().getIdUsuarioLogeado(user.nombreUsuario);
         System.out.println(idUsuarioLogeado);
 
-   //     model.addAttribute("likes",DAOFactory.getInstance().getDaoLike().getLikes());
+        //     model.addAttribute("likes",DAOFactory.getInstance().getDaoLike().getLikes());
 
         model.addAttribute("post", listaP);
         System.out.println(user);
