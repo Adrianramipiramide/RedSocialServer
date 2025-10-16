@@ -42,11 +42,16 @@ public class UsuarioControler {
         DAOFactory daoFactory = DAOFactory.getInstance();
         List<Usuario> listaU = daoFactory.getDaoUsuario().getUsuarios();
         //  model.addAttribute("likes",daoFactory.getDaoLike().getLikes());
-        List<Post> listaP = DAOFactory.getInstance().getDaoPost().getPosts();
+
+        List<Post> listaP = daoFactory.getDaoPost().getPosts();
+
+
         daoFactory.getDaoLike().getLikes(listaP);
+
         if (listaU.contains(user)) {
-            model.addAttribute("post", daoFactory.getDaoPost().getPosts());
+            model.addAttribute("post", listaP);
             System.out.println(user.nombreUsuario);
+
             idUsuarioLogeado = DAOFactory.getInstance().getDaoUsuario().getIdUsuarioLogeado(user.nombreUsuario);
             return "posts";
         } else {
@@ -67,11 +72,10 @@ public class UsuarioControler {
 
         daoFactory.getDaoLike().getLikes(listaP);
 
-
         idUsuarioLogeado = DAOFactory.getInstance().getDaoUsuario().getIdUsuarioLogeado(user.nombreUsuario);
         System.out.println(idUsuarioLogeado);
 
-        //     model.addAttribute("likes",DAOFactory.getInstance().getDaoLike().getLikes());
+        //model.addAttribute("likes",DAOFactory.getInstance().getDaoLike().getLikes());
 
         model.addAttribute("post", listaP);
         System.out.println(user);

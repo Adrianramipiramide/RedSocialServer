@@ -31,6 +31,27 @@ public class DAOLikeSQL implements DAOLike {
         }
     }
 
+    public List<Post> getLikeUnUser(int idUSer, int idPost){
+        List<Post> like = new ArrayList<>();
+
+        String consulta = "select idPost from UserPost_Likes where idUser = ?";
+
+        try{
+           PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);
+           statement.setInt(1,idUSer);
+
+           ResultSet rs = statement.executeQuery();
+           while (rs.next()){
+
+           }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return like;
+    }
+
     public void sumarLike(int idUser, int idPost) {
 
         String consulta = "insert into UserPost_Likes (idUser, idPost) values (?,?)";

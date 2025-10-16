@@ -110,11 +110,12 @@ public class PostController {
         List<Post> fechasOrdenadas;
 
         fechasOrdenadas = listaP.stream().sorted(Comparator.comparing(Post::getFechaPublicacion).reversed()).toList();
-       // model.addAttribute("likes", );
+
         daoFactory.getDaoLike().getLikes(listaP);
-        for (Post p : listaP) {
-            model.addAttribute("likes", p.getLikes());
-        }
+
+
+
+
         model.addAttribute("post", fechasOrdenadas);
 
         return "posts";

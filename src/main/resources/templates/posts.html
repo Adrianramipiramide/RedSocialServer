@@ -44,14 +44,13 @@
             <form action="/gustar" method="post">
                 <td th:text="${post.likes}">
                 <!--METERLE UN TH-IF CON CADA IMAGEN DEPENDIENDO SI LE DA LIKE O NO -->
-                <td><img src="https://st4.depositphotos.com/25868248/28326/v/950/depositphotos_283261126-stock-illustration-vector-icon-thumbs-instagram-heart.jpg" alt="imagen"></td>
+             <!--   <td th:if=""><img src="https://st4.depositphotos.com/25868248/28326/v/950/depositphotos_283261126-stock-illustration-vector-icon-thumbs-instagram-heart.jpg" alt="imagen"></td>-->
                 <td>    <input type="hidden" name="idPost" th:value="${post.id}"> </td>
                <td> <button type="submit">Me gusta!</button>
                </td>
             </form>
         <td>
             <form action="/repostear" method="post">
-
                 <input type="hidden" name="descripcion" th:value="${post.descripcion}">
                 <input type="hidden" name="fechaPublicacion" th:value="${post.fechaPublicacion}">
                 <button>Repostear</button>
