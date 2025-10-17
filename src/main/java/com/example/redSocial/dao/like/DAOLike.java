@@ -8,4 +8,6 @@ public interface DAOLike {
 
     public void getLikes(List<Post> posts);
     public void sumarLike(int idUser, int idPost);
+    public void restarLike(int idUser, int idPost);
+    public boolean getLikeUnUser(int idUser, int idPost);
 }

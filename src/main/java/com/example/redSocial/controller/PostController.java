@@ -54,13 +54,18 @@ public class PostController {
 
     @PostMapping("/gustar")
     String darMeGusta(int idPost, Model model) {
+
         DAOFactory daoFactory = DAOFactory.getInstance();
         List<Post> listaP = daoFactory.getDaoPost().getPosts();
-        daoFactory.getDaoLike().sumarLike(UsuarioControler.idUsuarioLogeado, idPost);
-        daoFactory.getDaoLike().getLikes(listaP);
-        for (Post p : listaP) {
-            model.addAttribute("likes", p.getLikes());
+
+        if(daoFactory.getDaoLike().getLikeUnUser(UsuarioControler.idUsuarioLogeado, idPost)){
+            daoFactory.getDaoLike().sumarLike(UsuarioControler.idUsuarioLogeado, idPost);
+
+        }else {
+            daoFactory.getDaoLike().restarLike(UsuarioControler.idUsuarioLogeado,idPost);
+
         }
+        daoFactory.getDaoLike().getLikes(listaP);
 
         model.addAttribute("post", listaP);
 
