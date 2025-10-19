@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DAOLikeSQL implements DAOLike {
@@ -22,11 +23,20 @@ public class DAOLikeSQL implements DAOLike {
             PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);
 
             ResultSet rs = statement.executeQuery();
-            int contador = 0;
+
+
             while (rs.next()) {
-                posts.get(contador).setLikes(rs.getInt("numLikes"));
-                contador++;
+
+//Hacer una consulta por cada post??
+                for (Post p : posts){
+                    if(p.getId() == rs.getInt("idPost")) {
+                        p.setLikes(rs.getInt("numLikes"));
+                    }
+
+                }
             }
+
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
