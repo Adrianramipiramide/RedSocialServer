@@ -41,7 +41,6 @@ public class DAOLikeSQL implements DAOLike {
 
     public boolean getLikeUnUser(int idUSer, int idPost) {
         boolean like = true;
-
         String consulta = "select idPost from UserPost_Likes where idUser like ? AND idPost like ?";
 
         try {
