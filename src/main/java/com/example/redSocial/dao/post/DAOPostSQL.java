@@ -72,8 +72,6 @@ public class DAOPostSQL implements DAOPost{
 
             } else if ((p.getFechaPublicacion().toString()).equals(descripcion)) {
                 coincidencias.add(p);
-            }  else {
-                System.out.println("No se ha encontrado un post que coincida");
             }
         }
         return coincidencias;

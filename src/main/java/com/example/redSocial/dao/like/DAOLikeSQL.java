@@ -26,17 +26,13 @@ public class DAOLikeSQL implements DAOLike {
 
 
             while (rs.next()) {
-
-//Hacer una consulta por cada post??
                 for (Post p : posts){
                     if(p.getId() == rs.getInt("idPost")) {
                         p.setLikes(rs.getInt("numLikes"));
+                        break;
                     }
-
                 }
             }
-
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
