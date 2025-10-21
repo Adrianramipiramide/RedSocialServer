@@ -74,8 +74,7 @@ public class DAOPostSQL implements DAOPost{
                 coincidencias.add(p);
             }
         }
+        DAOFactory.getInstance().getDaoLike().getLikes(coincidencias);
         return coincidencias;
     }
-
-
 }

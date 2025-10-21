@@ -45,8 +45,8 @@ public class PostController {
 
     @GetMapping("/filtrarPost")
     String filtrado(@RequestParam("descripcion") String descripcion, Model model) {
-
         DAOFactory daoFactory = DAOFactory.getInstance();
+
         model.addAttribute("post", daoFactory.getDaoPost().filtrar(descripcion));
 
         return "posts";
@@ -97,9 +97,6 @@ public class PostController {
 
         fechasOrdenadas = listaP.stream().sorted(Comparator.comparing(Post::getFechaPublicacion)).toList();
         daoFactory.getDaoLike().getLikes(listaP);
-        for (Post p : listaP) {
-            model.addAttribute("likes", p.getLikes());
-        }
 
         model.addAttribute("post", fechasOrdenadas);
 
