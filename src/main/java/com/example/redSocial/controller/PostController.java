@@ -6,10 +6,7 @@ import com.example.redSocial.dao.DAOFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -24,24 +21,9 @@ public class PostController {
         return "posts";
     }
 
-    @RequestMapping("crearPost")
-    String crearPosr() {
-        return "crearPost";
-    }
-
-    @PostMapping("crearPostReal")
-    String creacionPost(String descripcion, LocalDate fechaPublicacion, Model model) {
-
-        DAOFactory daoFactory = DAOFactory.getInstance();
-
-        System.out.println("El id de usuario es " + UsuarioControler.idUsuarioLogeado);
-        DAOFactory.getInstance().getDaoPost().crearPost(descripcion, String.valueOf(fechaPublicacion), UsuarioControler.idUsuarioLogeado);
-        List<Post> listaP = daoFactory.getDaoPost().getPosts();
-        model.addAttribute("post", listaP);
 
 
-        return "posts";
-    }
+
 
     @GetMapping("/filtrarPost")
     String filtrado(@RequestParam("descripcion") String descripcion, Model model) {
@@ -116,6 +98,31 @@ public class PostController {
         daoFactory.getDaoLike().getLikes(listaP);
 
         model.addAttribute("post", fechasOrdenadas);
+
+        return "posts";
+    }
+
+    @GetMapping("/posts/ver/{id}")
+    String ver(@PathVariable int id){
+        System.out.println(id);
+        return "posts";
+    }
+
+    @RequestMapping("crearPost")
+    String crearPosr() {
+        return "crearPost";
+    }
+
+    @PostMapping("crearPostReal")
+    String creacionPost(String descripcion, LocalDate fechaPublicacion, Model model) {
+
+        DAOFactory daoFactory = DAOFactory.getInstance();
+
+        System.out.println("El id de usuario es " + UsuarioControler.idUsuarioLogeado);
+        DAOFactory.getInstance().getDaoPost().crearPost(descripcion, String.valueOf(fechaPublicacion), UsuarioControler.idUsuarioLogeado);
+        List<Post> listaP = daoFactory.getDaoPost().getPosts();
+        model.addAttribute("post", listaP);
+
 
         return "posts";
     }
