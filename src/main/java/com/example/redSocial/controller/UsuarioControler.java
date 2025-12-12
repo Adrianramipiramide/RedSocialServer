@@ -66,18 +66,18 @@ public class UsuarioControler {
 
         DAOFactory daoFactory = DAOFactory.getInstance();
 
-        DAOFactory.getInstance().getDaoUsuario().crearUsuario(user.getNombreUsuario(), user.getPassword(), String.valueOf(user.getFechaNacimiento()));
+        DAOFactory.getInstance().getDaoUsuario().crearUsuario(user.getNombreUsuario(), user.getPassword(), (user.getFechaNacimiento()));
 
-        List<Post> listaP = daoFactory.getDaoPost().getPosts();
+  //      List<Post> listaP = daoFactory.getDaoPost().getPosts();
 
-        daoFactory.getDaoLike().getLikes(listaP);
+   //     daoFactory.getDaoLike().getLikes(listaP);
 
-        idUsuarioLogeado = DAOFactory.getInstance().getDaoUsuario().getIdUsuarioLogeado(user.nombreUsuario);
-        System.out.println(idUsuarioLogeado);
+       // idUsuarioLogeado = DAOFactory.getInstance().getDaoUsuario().getIdUsuarioLogeado(user.nombreUsuario);
+       // System.out.println(idUsuarioLogeado);
 
         //model.addAttribute("likes",DAOFactory.getInstance().getDaoLike().getLikes());
 
-        model.addAttribute("post", listaP);
+  //      model.addAttribute("post", listaP);
         System.out.println(user);
 
 

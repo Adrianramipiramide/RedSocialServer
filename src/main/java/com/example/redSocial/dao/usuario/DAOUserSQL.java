@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DAOUserSQL implements DAOUsuario{
@@ -17,12 +18,12 @@ public class DAOUserSQL implements DAOUsuario{
     public List<Usuario> getUsuarios() {
         List<Usuario> listaUsuarios = new ArrayList<>();
 
-        String consulta = "select * from User";
+        String consulta = "select * from Usuario";
         try{
             PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
-                Usuario user = new Usuario(LocalDate.parse(rs.getString("fechaNacimiento")), rs.getString("nombre"),rs.getString("passw"));
+                Usuario user = new Usuario((rs.getDate("fechaNacimiento")), rs.getString("nombre"),rs.getString("passw"));
                 listaUsuarios.add(user);
                 System.out.println(user);
             }
@@ -34,16 +35,16 @@ public class DAOUserSQL implements DAOUsuario{
     }
 
     @Override
-    public Usuario crearUsuario(String nombre, String passw, String fechaNacimiento) {
+    public Usuario crearUsuario(String nombre, String passw, Date fechaNacimiento) {
         System.out.println(nombre);
         System.out.println(passw);
         System.out.println(fechaNacimiento);
         try{
-            String consulta = "insert into User (nombre,passw,fechaNacimiento) values (?,?,?)";
+            String consulta = "insert into Usuario (nombre,passw,fechaNacimiento) values (?,?,?)";
             PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);
             statement.setString(1,nombre);
             statement.setString(2, passw);
-            statement.setString(3, fechaNacimiento);
+            statement.setDate(3, (java.sql.Date) fechaNacimiento);
             statement.execute();
         } catch (SQLException e) {
           e.printStackTrace();
@@ -54,7 +55,7 @@ public class DAOUserSQL implements DAOUsuario{
 
     public int getIdUsuarioLogeado(String nombreUsuario){
         int idUsuario = 0;
-        String consulta = "select id from User where nombre = ?";
+        String consulta = "select id from Usuario where nombre = ?";
         try{
             PreparedStatement statement = BDConnector.getInstance().prepareStatement(consulta);
 
